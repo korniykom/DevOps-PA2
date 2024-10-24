@@ -2,6 +2,12 @@
 #include <cmath> 
 
 double TrigFunction::FuncA(int n) {
-    if (n < 1) return 0.0; 
-    return 1.0 + (1.0/3.0) + (2.0/15.0);
+
+    double sum = 0.0;
+    for (int i = 1; i <= n; ++i) {
+        double term = (i % 2 == 0 ? -1 : 1) * (pow(4, i - 1) * (1 - pow(4, i))) / (2 * i);
+        sum += term;
+    }
+    
+    return sum;
 }
