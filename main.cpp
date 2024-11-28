@@ -3,6 +3,6 @@
 
 int main() {
     TrigFunction trigFunc;
-    std::cout << "Result: " << trigFunc.FuncA(0) << std::endl; // Test the function
+    std::cout << "Result: " << trigFunc.FuncA(2) << std::endl; // Test the function
     return 0;
 }
