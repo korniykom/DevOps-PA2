@@ -1,0 +1,3 @@
+main.o: main.cpp /usr/include/stdc-predef.h ../TrigFunction.h
+/usr/include/stdc-predef.h:
+../TrigFunction.h:
