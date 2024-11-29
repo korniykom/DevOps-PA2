@@ -136,7 +136,7 @@ main.o: main.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/14.2.1/bits/locale_facets.tcc \
  /usr/include/c++/14.2.1/bits/basic_ios.tcc \
  /usr/include/c++/14.2.1/bits/ostream.tcc /usr/include/c++/14.2.1/istream \
- /usr/include/c++/14.2.1/bits/istream.tcc TrigFunction.h
+ /usr/include/c++/14.2.1/bits/istream.tcc TrigFunction.h HTTP_server.h
 /usr/include/stdc-predef.h:
 /usr/include/c++/14.2.1/iostream:
 /usr/include/c++/14.2.1/bits/requires_hosted.h:
@@ -327,3 +327,4 @@ main.o: main.cpp /usr/include/stdc-predef.h \
 /usr/include/c++/14.2.1/istream:
 /usr/include/c++/14.2.1/bits/istream.tcc:
 TrigFunction.h:
+HTTP_server.h:

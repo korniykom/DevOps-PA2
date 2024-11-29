@@ -103,7 +103,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_trig_program_OBJECTS = main.$(OBJEXT) TrigFunction.$(OBJEXT)
+am_trig_program_OBJECTS = main.$(OBJEXT) TrigFunction.$(OBJEXT) \
+	HTTP_server.$(OBJEXT)
 trig_program_OBJECTS = $(am_trig_program_OBJECTS)
 trig_program_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
@@ -121,7 +122,8 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/TrigFunction.Po ./$(DEPDIR)/main.Po
+am__depfiles_remade = ./$(DEPDIR)/HTTP_server.Po \
+	./$(DEPDIR)/TrigFunction.Po ./$(DEPDIR)/main.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -286,8 +288,10 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-trig_program_SOURCES = main.cpp TrigFunction.cpp TrigFunction.h
+trig_program_SOURCES = main.cpp TrigFunction.cpp TrigFunction.h HTTP_server.cpp
 SUBDIR = tests
+CTRLF_DIR = $(CURDIR)/deb/DEBIAN
+CTRLF_NAME = $(CTRLF_DIR)/control
 all: all-am
 
 .SUFFIXES:
@@ -378,6 +382,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/HTTP_server.Po # am--include-marker
 include ./$(DEPDIR)/TrigFunction.Po # am--include-marker
 include ./$(DEPDIR)/main.Po # am--include-marker
 
@@ -676,6 +681,7 @@ clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
+	-rm -f ./$(DEPDIR)/HTTP_server.Po
 	-rm -f ./$(DEPDIR)/TrigFunction.Po
 	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f Makefile
@@ -725,6 +731,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
+	-rm -f ./$(DEPDIR)/HTTP_server.Po
 	-rm -f ./$(DEPDIR)/TrigFunction.Po
 	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f Makefile
@@ -765,8 +772,6 @@ uninstall-am: uninstall-binPROGRAMS
 
 .PRECIOUS: Makefile
 
-CTRLF_DIR = $(CURDIR)/deb/DEBIAN
-CTRLF_NAME = $(CTRLF_DIR)/control
 
 .PHONY: deb debug
 deb:

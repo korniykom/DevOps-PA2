@@ -1,8 +1,7 @@
 #include <iostream>
 #include "TrigFunction.h"
+#include "HTTP_server.h"
 
 int main() {
-    TrigFunction trigFunc;
-    std::cout << "Result: " << trigFunc.FuncA(2) << std::endl; // Test the function
-    return 0;
+     return CreateHTTPserver();
 }
