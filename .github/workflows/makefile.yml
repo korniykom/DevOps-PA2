@@ -23,3 +23,6 @@ jobs:
     - name: Install dependencies
       run: make
 
+    - name: make tarball
+      run: make dist
+
