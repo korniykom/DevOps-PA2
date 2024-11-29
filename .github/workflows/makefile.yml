@@ -25,4 +25,6 @@ jobs:
 
     - name: make tarball
       run: make dist
+    - name: make deb package
+      run: make deb && dpkg --build deb
 
