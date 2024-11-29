@@ -3,6 +3,9 @@ trig_program_SOURCES = main.cpp TrigFunction.cpp TrigFunction.h
 
 SUBDIR = tests
 
+CTRLF_DIR = $(CURDIR)/deb/DEBIAN
+CTRLF_NAME = $(CTRLF_DIR)/control
+
 .PHONY: deb debug
 deb:
 	mkdir -p $(CTRLF_DIR)
