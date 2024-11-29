@@ -12,6 +12,7 @@
 #include <sys/sendfile.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include "TrigFunction.h"
 
 #include <vector>
 #include <random>
@@ -134,8 +135,7 @@ int CreateHTTPserver()
 
                     sendGETresponse(clientSocket, strFilePath, strResponse);
                 }
-                else if(!strcmp(strHTTP_requestPath, "/compute"))
-		{
+                else if(!strcmp(strHTTP_requestPath, "/compute")) {
 			
 			auto t1 = std::chrono::high_resolution_clock::now();	
 
@@ -144,8 +144,9 @@ int CreateHTTPserver()
 			std::mt19937 mtre {123};
 			std::uniform_int_distribution<int> distr {0, 2000000};
 
-			for (int i=0; i<2000000; i++) {
-				aValues.push_back(distr(mtre));
+            TrigFunction trigFunc;
+			for (int i=0; i<50000; i++) {
+                trigFunc.FuncA(i);    
 			}
 
 			for (int i=0; i<500; i++)
