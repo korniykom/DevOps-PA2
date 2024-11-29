@@ -328,5 +328,6 @@ make[1]: Leaving directory '/home/max/DevOps-PA2'
 config.status:1029: $? = 0
 config.status:1024: cd tests       && sed -e '/# am--include-marker/d' Makefile         | make -f - am--depfiles
 make[1]: Entering directory '/home/max/DevOps-PA2/tests'
+make[1]: Nothing to be done for 'am--depfiles'.
 make[1]: Leaving directory '/home/max/DevOps-PA2/tests'
 config.status:1029: $? = 0
