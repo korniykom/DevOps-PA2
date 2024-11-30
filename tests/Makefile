@@ -537,9 +537,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include $(top_builddir)/$(DEPDIR)/HTTP_server.Po # am--include-marker
-include $(top_builddir)/$(DEPDIR)/TrigFunction.Po # am--include-marker
-include ./$(DEPDIR)/main.Po # am--include-marker
+#include $(top_builddir)/$(DEPDIR)/HTTP_server.Po # am--include-marker
+#include $(top_builddir)/$(DEPDIR)/TrigFunction.Po # am--include-marker
+#include ./$(DEPDIR)/main.Po # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)

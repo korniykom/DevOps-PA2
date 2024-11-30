@@ -23,7 +23,7 @@ int main(void) {
 
     if (curl) {
         // Set the URL for the GET request
-        curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:5000/calculate");
+        curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:8081/compute");
 
         // Set the callback function to handle the response data
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
