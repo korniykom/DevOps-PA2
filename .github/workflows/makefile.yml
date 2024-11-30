@@ -13,8 +13,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: install qemu/kvm
-      run: docker/setup-buildx-action@v1
+    - name: install qemu
+      uses: docker/setup-buildx-action@v1
 
     - name: autoreconf
       run: autoreconf --install
