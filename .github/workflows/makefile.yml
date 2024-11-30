@@ -30,19 +30,20 @@ jobs:
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 60
         sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 60
 
-
     - name: make
-      run: make clean && autoreconf && ./configure && make 
+      run: make clean && autoreconf && ./configure && make
 
-    - name: run server
-      run: ./trig_program
 
-    - name: make tarball
-      run: make dist
-      
-    - name: make deb package
-      run: make deb && dpkg --build deb
+    - name: run server in background
+      run: |
+        ./trig_program &  # Run the server in the background
+        sleep 5           # Wait for a few seconds to ensure the server is running
 
     - name: autotest
       run: cd ./tests && make check
 
+    - name: make tarball
+      run: make dist
+
+    - name: make deb package
+      run: make deb && dpkg --build deb
