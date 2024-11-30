@@ -32,7 +32,7 @@ jobs:
 
 
     - name: make
-      run: make
+      run: make clean && autoreconf && ./configure && make 
 
     - name: run server
       run: ./trig_program
