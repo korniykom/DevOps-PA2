@@ -1,1 +1,2 @@
-PASS trigprogramtest1 (exit status: 0)
+curl_easy_perform() failed: Could not connect to server
+FAIL trigprogramtest1 (exit status: 1)
