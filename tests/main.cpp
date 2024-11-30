@@ -2,11 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
-#include <json-c/json.h> // JSON library to parse response
 
-#define URL "http://127.0.0.1:8081/compute"
-
-// This function is called by libcurl to write the received data
+// Callback function for handling received data from libcurl
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
     size_t total_size = size * nmemb;
     strncat((char*)userp, (char*)contents, total_size);
@@ -18,19 +15,21 @@ int main(void) {
     CURLcode res;
 
     // Buffer to store the response data
-    char response_data[1024] = {0};
+    char response_data[256] = {0};  // Assuming the response will be small enough to fit here
 
-    // Initialize CURL
+    // Initialize libcurl globally
     curl_global_init(CURL_GLOBAL_DEFAULT);
     curl = curl_easy_init();
 
     if (curl) {
-        // Set CURL options
-        curl_easy_setopt(curl, CURLOPT_URL, URL);
+        // Set the URL for the GET request
+        curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:5000/calculate");
+
+        // Set the callback function to handle the response data
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, response_data);
 
-        // Perform GET request
+        // Perform the GET request
         res = curl_easy_perform(curl);
 
         // Check for errors
@@ -38,58 +37,28 @@ int main(void) {
             fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
             curl_easy_cleanup(curl);
             curl_global_cleanup();
-            return 1;
+            return 1;  // Return 1 indicating failure
         }
 
-        // Print the received response (for debugging)
-        printf("Response Data: %s\n", response_data);
+        // Convert response data to an integer
+        int elapsed_time = atoi(response_data);  // Convert response to an integer
 
-        // Parse JSON response to extract elapsed time
-        struct json_object *parsed_json;
-        struct json_object *elapsed_time;
+        // Print the response value for debugging
+        printf("Elapsed Time: %d\n", elapsed_time);
 
-        parsed_json = json_tokener_parse(response_data);
-        if (parsed_json == NULL) {
-            fprintf(stderr, "Error parsing response as JSON\n");
+        // Compare the response value to 20000
+        if (elapsed_time < 20000) {
             curl_easy_cleanup(curl);
             curl_global_cleanup();
-            return 1;
-        }
-
-        // Extract the elapsed_time value
-        if (json_object_object_get_ex(parsed_json, "elapsed_time", &elapsed_time)) {
-            double time_in_ms = json_object_get_double(elapsed_time);
-            printf("Elapsed Time: %.2f ms\n", time_in_ms);
-
-            // Compare the elapsed time with 20000 ms
-            if (time_in_ms < 20000) {
-                // Test passed, return 0
-                json_object_put(parsed_json);
-                curl_easy_cleanup(curl);
-                curl_global_cleanup();
-                return 0;
-            } else {
-                // Test failed, return 1
-                json_object_put(parsed_json);
-                curl_easy_cleanup(curl);
-                curl_global_cleanup();
-                return 1;
-            }
+            return 0;  // Return 0 indicating success (elapsed time < 20000)
         } else {
-            fprintf(stderr, "Failed to find 'elapsed_time' in response JSON\n");
-            json_object_put(parsed_json);
             curl_easy_cleanup(curl);
             curl_global_cleanup();
-            return 1;
+            return 1;  // Return 1 indicating failure (elapsed time >= 20000)
         }
-
-        // Cleanup
-        json_object_put(parsed_json);
-        curl_easy_cleanup(curl);
     }
 
-    // Cleanup global CURL resources
+    // Cleanup global CURL resources if curl_easy_init fails
     curl_global_cleanup();
-
-    return 1; // If something goes wrong, return 1 to indicate failure
+    return 1;  // Return 1 to indicate something went wrong
 }

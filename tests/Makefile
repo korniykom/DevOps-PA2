@@ -101,9 +101,9 @@ CONFIG_CLEAN_VPATH_FILES =
 am__dirstamp = $(am__leading_dot)dirstamp
 am_trigprogramtest1_OBJECTS = main.$(OBJEXT) \
 	$(top_builddir)/TrigFunction.$(OBJEXT) \
-	%(top_builddir)/HTTP_server.$(OBJEXT)
+	$(top_builddir)/HTTP_server.$(OBJEXT)
 trigprogramtest1_OBJECTS = $(am_trigprogramtest1_OBJECTS)
-trigprogramtest1_LDADD = $(LDADD)
+trigprogramtest1_DEPENDENCIES =
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -119,8 +119,8 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = $(top_builddir)/$(DEPDIR)/TrigFunction.Po \
-	%(top_builddir)/$(DEPDIR)/HTTP_server.Po ./$(DEPDIR)/main.Po
+am__depfiles_remade = $(top_builddir)/$(DEPDIR)/HTTP_server.Po \
+	$(top_builddir)/$(DEPDIR)/TrigFunction.Po ./$(DEPDIR)/main.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -475,7 +475,8 @@ top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
 AUTOMAKE_OPTIONS = foreign
-trigprogramtest1_SOURCES = main.cpp $(top_builddir)/TrigFunction.cpp $(top_builddir)/TrigFunction.h %(top_builddir)//HTTP_server.cpp
+trigprogramtest1_SOURCES = main.cpp $(top_builddir)/TrigFunction.cpp $(top_builddir)/TrigFunction.h $(top_builddir)/HTTP_server.cpp
+trigprogramtest1_LDADD = -lcurl
 all: all-am
 
 .SUFFIXES:
@@ -521,15 +522,9 @@ $(top_builddir)/$(DEPDIR)/$(am__dirstamp):
 $(top_builddir)/TrigFunction.$(OBJEXT):  \
 	$(top_builddir)/$(am__dirstamp) \
 	$(top_builddir)/$(DEPDIR)/$(am__dirstamp)
-%(top_builddir)/$(am__dirstamp):
-	@$(MKDIR_P) %(top_builddir)
-	@: >>%(top_builddir)/$(am__dirstamp)
-%(top_builddir)/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) %(top_builddir)/$(DEPDIR)
-	@: >>%(top_builddir)/$(DEPDIR)/$(am__dirstamp)
-%(top_builddir)/HTTP_server.$(OBJEXT):  \
-	%(top_builddir)/$(am__dirstamp) \
-	%(top_builddir)/$(DEPDIR)/$(am__dirstamp)
+$(top_builddir)/HTTP_server.$(OBJEXT):  \
+	$(top_builddir)/$(am__dirstamp) \
+	$(top_builddir)/$(DEPDIR)/$(am__dirstamp)
 
 trigprogramtest1$(EXEEXT): $(trigprogramtest1_OBJECTS) $(trigprogramtest1_DEPENDENCIES) $(EXTRA_trigprogramtest1_DEPENDENCIES) 
 	@rm -f trigprogramtest1$(EXEEXT)
@@ -538,14 +533,13 @@ trigprogramtest1$(EXEEXT): $(trigprogramtest1_OBJECTS) $(trigprogramtest1_DEPEND
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f $(top_builddir)/*.$(OBJEXT)
-	-rm -f %(top_builddir)/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
-#include $(top_builddir)/$(DEPDIR)/TrigFunction.Po # am--include-marker
-#include %(top_builddir)/$(DEPDIR)/HTTP_server.Po # am--include-marker
-#include ./$(DEPDIR)/main.Po # am--include-marker
+include $(top_builddir)/$(DEPDIR)/HTTP_server.Po # am--include-marker
+include $(top_builddir)/$(DEPDIR)/TrigFunction.Po # am--include-marker
+include ./$(DEPDIR)/main.Po # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -878,8 +872,6 @@ distclean-generic:
 	-test . = "$(srcdir)" || $(am__rm_f) $(CONFIG_CLEAN_VPATH_FILES)
 	-$(am__rm_f) $(top_builddir)/$(DEPDIR)/$(am__dirstamp)
 	-$(am__rm_f) $(top_builddir)/$(am__dirstamp)
-	-$(am__rm_f) %(top_builddir)/$(DEPDIR)/$(am__dirstamp)
-	-$(am__rm_f) %(top_builddir)/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -889,8 +881,8 @@ clean: clean-am
 clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
+	-rm -f $(top_builddir)/$(DEPDIR)/HTTP_server.Po
 	-rm -f $(top_builddir)/$(DEPDIR)/TrigFunction.Po
-	-rm -f %(top_builddir)/$(DEPDIR)/HTTP_server.Po
 	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -937,8 +929,8 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
+	-rm -f $(top_builddir)/$(DEPDIR)/HTTP_server.Po
 	-rm -f $(top_builddir)/$(DEPDIR)/TrigFunction.Po
-	-rm -f %(top_builddir)/$(DEPDIR)/HTTP_server.Po
 	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
