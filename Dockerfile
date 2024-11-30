@@ -1,3 +1,4 @@
+# Build stage
 FROM alpine as build
 
 WORKDIR /home/dockerImage
@@ -7,6 +8,11 @@ RUN autoreconf -fiv && automake --add-missing
 RUN ./configure --disable-dependency-tracking
 RUN make
 
+# Runtime stage
 FROM alpine
-COPY --from=build /home/dockerImage/trig_program /usr/local/bin/trig_program
-ENTRYPOINT [ "/usr/local/bin/trig_program" ]
+RUN apk add --no-cache libstdc++ libc6-compat
+WORKDIR /
+COPY --from=build /home/dockerImage/trig_program /home/trig_program
+
+# Set the desired entrypoint for the second alpine
+ENTRYPOINT ["/home/trig_program"]
