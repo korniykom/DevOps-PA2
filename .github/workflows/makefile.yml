@@ -47,3 +47,9 @@ jobs:
 
     - name: make deb package
       run: make deb && dpkg --build deb
+
+    - name: Login into Docker
+      run: docker login -u ${{vars.DOCKER_USERNAME}} -P ${{secrets.DOCKER_TOKEN}}
+
+    - name: Job Build Dockerfile image
+      run: docker build --platform=linux/amd64 -t korniykom/alpinehttpserver --push .
