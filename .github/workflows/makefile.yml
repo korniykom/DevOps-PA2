@@ -2,9 +2,9 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "*" ]
 
 jobs:
   build:
@@ -31,4 +31,13 @@ jobs:
 
     - name: autotest
       run: cd ./tests && make check
+
+    - name: build ls
+      run: docker buildx ls 
+      
+    - name: Login into Docker
+      run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_TOKEN}}
+
+    - name: Job Build Dockerfile image
+      run: docker build --platform=linux/amd64 -t korniykom/alpinehttpserver --push .
 
