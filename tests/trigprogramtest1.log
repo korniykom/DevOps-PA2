@@ -1,2 +1,2 @@
-curl_easy_perform() failed: Could not connect to server
-FAIL trigprogramtest1 (exit status: 1)
+Elapsed Time: 5057
+PASS trigprogramtest1 (exit status: 0)
