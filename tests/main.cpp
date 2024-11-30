@@ -44,18 +44,22 @@ int main(void) {
         int elapsed_time = atoi(response_data);  // Convert response to an integer
 
         // Print the response value for debugging
-        printf("Elapsed Time: %d\n", elapsed_time);
+        printf("Elapsed Time: %d ms\n", elapsed_time);
 
         // Compare the response value to 20000
         if (elapsed_time < 20000) {
+            printf("Test passed: Elapsed time is less than 20000 ms.\n");
             curl_easy_cleanup(curl);
             curl_global_cleanup();
             return 0;  // Return 0 indicating success (elapsed time < 20000)
         } else {
+            printf("Test failed: Elapsed time is greater than or equal to 20000 ms.\n");
             curl_easy_cleanup(curl);
             curl_global_cleanup();
             return 1;  // Return 1 indicating failure (elapsed time >= 20000)
         }
+    } else {
+        fprintf(stderr, "curl_easy_init() failed.\n");
     }
 
     // Cleanup global CURL resources if curl_easy_init fails
