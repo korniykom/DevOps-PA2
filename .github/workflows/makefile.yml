@@ -29,6 +29,11 @@ jobs:
     - name: make deb package
       run: make deb && dpkg --build deb
 
+    - name: run server in background
+      run: |
+        ./trig_program &  # Run the server in the background
+        sleep 5           # Wait for a few seconds to ensure the server is running
+
     - name: autotest
       run: cd ./tests && make check
 
