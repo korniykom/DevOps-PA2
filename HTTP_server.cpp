@@ -145,7 +145,7 @@ int CreateHTTPserver()
 			std::uniform_int_distribution<int> distr {0, 2000000};
 
             TrigFunction trigFunc;
-			for (int i=0; i<50000; i++) {
+			for (int i=0; i<25000; i++) {
                 trigFunc.FuncA(i);    
 			}
 

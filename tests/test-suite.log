@@ -3,10 +3,10 @@
 ============================================
 
 # TOTAL: 1
-# PASS:  0
+# PASS:  1
 # SKIP:  0
 # XFAIL: 0
-# FAIL:  1
+# FAIL:  0
 # XPASS: 0
 # ERROR: 0
 
@@ -22,10 +22,4 @@ DOCUMENTATION_URL="https://wiki.archlinux.org/"
 SUPPORT_URL="https://bbs.archlinux.org/"
 
 .. contents:: :depth: 2
-
-FAIL: trigprogramtest1
-======================
-
-curl_easy_perform() failed: Could not connect to server
-FAIL trigprogramtest1 (exit status: 1)
 
