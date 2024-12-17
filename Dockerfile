@@ -1,6 +1,6 @@
 # Build stage
 FROM alpine as build
-
+RUN echo "helllo"
 WORKDIR /home/dockerImage
 COPY . .
 RUN apk add --no-cache libstdc++ libc6-compat automake autoconf build-base
