@@ -2,10 +2,9 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "master" ]
-
+    branches: [ "*" ]
 jobs:
   build:
 
@@ -13,6 +12,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: install qemu
+      uses: docker/setup-qemu-action@v3
+      
+    - name: install docker buildx
+      uses: docker/setup-buildx-action@v1
 
     - name: autoreconf
       run: autoreconf --install
@@ -42,14 +47,21 @@ jobs:
     - name: autotest
       run: cd ./tests && make check
 
-    - name: make tarball
-      run: make dist
-
-    - name: make deb package
-      run: make deb && dpkg --build deb
-
+    - name: build ls
+      run: docker buildx ls 
+      
     - name: Login into Docker
       run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_TOKEN}}
 
-    - name: Job Build Dockerfile image
-      run: docker build --platform=linux/amd64 -t korniykom/alpinehttpserver --push .
+    - name: Job Build Dockerfile image for amd64
+      run: docker build --platform=linux/amd64 -t korniykom/alpinehttpserver2:amd64 --push .
+    
+    - name: Job Build Dockerfile image for arm64
+      run: docker build --platform=linux/arm64 -t korniykom/alpinehttpserver2:arm64 --push .
+    
+    - name: create manifest
+      run: docker manifest create korniykom/alpinehttpserver2 --amend korniykom/alpinehttpserver2:amd64 --amend korniykom/alpinehttpserver2:arm64
+
+    - name: push manifest to dockerhub
+      run: docker manifest push korniykom/alpinehttpserver2
+      
